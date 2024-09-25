@@ -1,31 +1,21 @@
-# Cloudflare Node.js bindings
+# Cloudflare Node.js bindings  
 
-> [!WARNING]
-> 
-> `v3.x` of this library is a ground-up rewrite of the SDK, using code generation from our OpenAPI spec.
->
-> This package should be in a usable state for many projects, but expect frequent minor breaking
-> changes as we rename methods and types until GA. If this isn't suitable for you project, we recommend
-> pinning to the `2.x` releases for now.
->
-> We will be archiving the current repository (`cloudflare/node-cloudflare`) in favour
-> of the newer repository ([`cloudflare/cloudflare-typescript`](https://cloudflare](https://github.com/cloudflare/cloudflare-typescript))) to ensure consistency with our other
-> libraries. The repository will still be accessible if you wish to use it, however, you will not be
-> able to raise new issues or propose changes. Those should instead be directed to the newer repository.
-
+⚠️ `v3.x`  of this library is a ground-up rewrite of the SDK, 
+using code generation from our 
+OpenAPI spec.   
+ This package should be in a usable state for many projects, but expect frequent minor breaking changes as we rename methods and types until GA. 
+        If this isn't suitable for you project, we recommend pinning to the `2.x` releases for now.
+     > We will be archiving the current repository (`cloudflare/node-cloudflare`) in favour of the newer repository ([`cloudflare/cloudflare-typescript`](https://cloudflare](https://github.com/cloudflare/cloudflare-typescript))) to ensure consistency with our other > libraries.
+     The repository will still be accessible if you wish to use it,
+    however, you will not be able to raise new issues or 
+      propose changes. Those should instead be directed to the newer repository.
 ---
-
-[![Stability Stable][badge-stability]][badge-stability-url]
-[![NPM version][badge-npm]][badge-npm-url]
-[![Travis CI][badge-travis]][badge-travis-url]
-[![Coveralls][badge-coveralls]][badge-coveralls-url]
-[![NPM downloads][badge-npm-downloads]][badge-npm-downloads]
-[![Libraries.io Dependencies][badge-libraries]][badge-libraries-url]
-
-[Cloudflare v4 API][cf-api] bindings for Node.js, providing a sourdough
-"BREAD" (Browse, Read, Edit, Add, and Delete) interface.
-
-[cf-api]: https://api.cloudflare.com/
+[![Stability Stable][badge-stability]][badge-stability-url][![NPM version][badge-npm]][badge-npm-url][![Coveralls][badge-coveralls]][badge-coveralls-url][![NPM downloads][badge-npm-downloads]][badge-npm-downloads]
+---
+     [Cloudflare v4 API]
+     [cf-api] bindings for Node.js, providing a sourdough
+     "BREAD" (Browse, Read, Edit, Add, and Delete) interface.
+[cf-api]:https://api.cloudflare.com/ 
 [badge-stability]: https://img.shields.io/badge/stability-stable-green.svg?style=flat-square
 [badge-stability-url]: https://github.com/dominictarr/stability/blob/4d649a5b3af8444720929a50254dfbb071ce27e7/levels.json#L8-L9
 [badge-npm]: https://img.shields.io/npm/v/cloudflare.svg?style=flat-square
@@ -34,70 +24,37 @@
 [badge-travis]: https://img.shields.io/travis/cloudflare/node-cloudflare/master.svg?style=flat-square
 [badge-travis-url]: https://travis-ci.org/cloudflare/node-cloudflare
 [badge-coveralls]: https://img.shields.io/coveralls/github/cloudflare/node-cloudflare/master.svg?style=flat-square
-[badge-coveralls-url]: https://coveralls.io/github/cloudflare/node-cloudflare
-[badge-libraries]: https://img.shields.io/librariesio/github/cloudflare/node-cloudflare.svg?style=flat-square
-[badge-libraries-url]: https://libraries.io/npm/cloudflare
-
-With these bindings, you'll get the following features:
-
-* A Promise-based API. With modern versions of Node.js, this can be
-  leveraged for async/await and generator support.
-* Automatic handling of Gzip/Deflate compression.
-
-Node.js v4 and greater are supported.
-
-## Configuration
-
-### API Keys
-
-Set your account email address and API key.  The API key can be found on
-the [My Profile -> API Tokens][api-tokens] page in the Cloudflare dashboard.
-
-[api-tokens]: https://dash.cloudflare.com/profile/api-tokens
-
-```javascript
-var cf = require('cloudflare')({
-  email: 'you@example.com',
-  key: 'your Cloudflare API key'
-});
-```
-
-### API Tokens (BETA)
-
-Create your token on the [My Profile -> API Tokens][api-tokens] page in the Cloudflare dashboard.
-
-[api-tokens]: https://dash.cloudflare.com/profile/api-tokens
-
-```javascript
-var cf = require('cloudflare')({
-  token: 'your Cloudflare API token'
-});
-```
-
-## API Overview
-
-Every resource is accessed via your `cf` instance:
-
-```javascript
+[badge-coveralls-url]: 
+https://coveralls.io/github/cloudflare/node-cloudflare
+[badge-libraries]:
+https://img.shields.io/librariesio/github/cloudflare/node-cloudflare.svg?style=flat-square 
+[badge-libraries-url]:https://libraries.io/npm/cloudflare
+    With these bindings, 
+    you will get the following features:
+      A Promise-based API. With modern versions of Node.js, 
+           this can be leveraged for async/await, generator support, 
+           Automatic handling of Gzip/Deflate compression.
+        Node.js v4 and greater are supported  ---Configuration API Keys: Set 
+        your account email address and API key The API key 
+       can be found on the [My Profile -> API Tokens][api-tokens] 
+     page in the Cloudflare dashboard.  
+  [api-tokens]: https://dash.cloudflare.com/profile/api-tokens
+ `var cf = require('cloudflare')({email:'email@example.com',key: 'Cloudflare APIkey});`
+# API Tokens (BETA) Create your token on the [My Profile -> API Tokens][api-tokens] page in the Cloudflare dashboard.
+[api-tokens]: https://dash.cloudflare.com/profile/api-tokens 
+`var cf = require('cloudflare')({token: 'your Cloudflare API token'});`  API Overview Every resource is accessed 
+via your `cf` instance:
+`
 // cf.{ RESOURCE_NAME }.{ METHOD_NAME }
-```
+` Every resource method returns a promise,
+which can be chained or used with async/await.
 
-Every resource method returns a promise, which can be chained or used
-with async/await.
-
-```javascript
-cf.zones.read('023e105f4ecef8ad9ca31a8372d0c353').then(function (resp) {
-  return resp.result.status;
-});
-
+`cf.zones.read('023e105f4ecef8ad9ca31a8372d0c353').then(function (resp) { return resp.result.status;});`
 
 // where supported
-async function getZoneStatus(id) {
-  var resp = await cf.zones.read('023e105f4ecef8ad9ca31a8372d0c353');
-  return resp.result.status;
-}
-```
-
-### Documentation
-
-* [Generated JSDoc](https://cloudflare.github.io/node-cloudflare)
+async 
+function getZoneStatus(id) { var resp = await cf.zones.read('023e105f4ecef8ad9ca31a8372d0c353'
+);
+return resp.result.status;
+}    
+Documentation * [Generated JSDoc](https://cloudflare.github.io/node-cloudflare)
